@@ -15,14 +15,6 @@ const addToday = () =>
         }
     });
 
-const getDay = (date) => date.getDate() === now.getDate()
-    ? 'Сегодня'
-    : date.getDate() + 1 === now.getDate()
-        ? 'Вчера'
-        : date.getDate() + 2 === now.getDate()
-            ? 'Позавчера'
-            : date;
-
 const askAdd = (question = 'Добавить день?') =>
     rl.question(question + ': ', answer => {
         if (answer.toString().trim() === 'y') {
@@ -42,6 +34,17 @@ fs.readFile(fileName, 'utf8', (err, data) => {
     }
 
     const day = new Date(JSON.parse(data).previousDay);
-    console.log('Предыдущий день:', getDay(day) === 'Сегодня' || getDay(day) === 'Вчера' ? '\x1b[32m' : '', getDay(day), '\x1b[0m');
+
+    const getDay = (date) =>
+        date.getDate() === now.getDate()
+            ? 'Сегодня'
+            : date.getDate() + 1 === now.getDate()
+                ? 'Вчера'
+                : date.getDate() + 2 === now.getDate()
+                    ? 'Позавчера'
+                    : date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+
+    const formattedDay = getDay(day);
+    console.log('Предыдущий день:', formattedDay === 'Сегодня' || formattedDay === 'Вчера' ? '\x1b[32m' : '', formattedDay, '\x1b[0m');
     askAdd();
 });

@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const now = new Date();
-const fileName = 'data.json';
+const fileName = 'src/data.json';
 
 const getDay = (date) => date.getDate() === now.getDate()
     ? 'Сегодня'

@@ -38,10 +38,10 @@ const addToday = () => {
     startTimers();
 }
 
-const askAddDay = (question = 'Добавить день?') => console.log(question + ':');
+const askAddDay = (question = 'Добавить день?') => console.log(`${question}:`);
 
 readline.input.on('keypress', (letter, key) => {
-    const isEnter = key && (key.name == 'enter' | key.name == 'return');
+    const isEnter = key && (key.name == 'enter' || key.name == 'return');
     const isEscape = key && key.name == 'escape';
 
     if (dayAdded) {
@@ -56,6 +56,7 @@ readline.input.on('keypress', (letter, key) => {
             console.log('День добавлен');
         } else if (isEscape) {
             console.log('День не добавлен');
+            process.exit();
         }
     }
 });
@@ -78,6 +79,6 @@ fs.readFile(fileName, 'utf8', (err, data) => {
                     : `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()}`;
 
     const formattedDay = getDay(day);
-    console.log('Предыдущий день:', formattedDay === 'Сегодня' || formattedDay === 'Вчера' ? '\x1b[32m' : '', formattedDay, '\x1b[0m');
+    console.log(`Предыдущий день:${formattedDay === 'Сегодня' || formattedDay === 'Вчера' ? '\x1b[32m' : ''} ${formattedDay}`, '\x1b[0m');
     askAddDay();
 });
